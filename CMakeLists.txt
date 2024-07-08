@@ -25,4 +25,6 @@ add_executable(ray_tracing_in_one_weekend
         src/ecs/EntityDescriptor.h
         src/ecs/ComponentStorage.h
         src/main.cpp
+        src/Camera.cpp
+        src/Camera.h
 )
