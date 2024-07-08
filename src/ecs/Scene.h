@@ -35,22 +35,22 @@ class Scene
     }
 
     template<class T>
-    size_t getComponentId()
+    size_t getComponentId() const
     {
-        static const size_t componentId = s_componentCounter++;
-
-        static bool once = true;
-        if(once)
+          //  A lambda function that runs only once (not thread safe)
+        static const size_t componentId = [this]
         {
-            m_componentStorages[componentId] = dynamic_cast<BaseComponentStorage*>(new ComponentStorage<T>());
-            once = false;
-        }
+            auto *s = m_componentStorages.begin() + componentId;
+            auto *ss = const_cast<BaseComponentStorage**>(s);
+            *ss = dynamic_cast<BaseComponentStorage*>(new ComponentStorage<T>());
+            return s_componentCounter++;
+        }();
 
         return componentId;
     }
 
     template<class T>
-    ComponentStorage<T> *getComponentStorage()
+    ComponentStorage<T> *getComponentStorage() const
     {
         return dynamic_cast<ComponentStorage<T>*>(m_componentStorages[getComponentId<T>()]);
     }
@@ -69,7 +69,7 @@ class Scene
     }
 
       //  Ray Collision Detection
-    std::optional<CollisionRecord> collideFirst(const Ray &ray, Interval interval)
+    std::optional<CollisionRecord> collideFirst(const Ray &ray, Interval interval) const
     {
         CollisionRecord cRec;
         const size_t componentId = getComponentId<SphericalRayColliderComponent>();
