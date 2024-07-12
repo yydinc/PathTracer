@@ -12,25 +12,6 @@
 
 using namespace PathTracer;
 
-Sphere randomSphere()
-{
-    static uint32_t seed = 1234567;
-
-    double x = randomDouble(seed) * 2 - 1;
-    seed = random(seed);
-
-    double y = randomDouble(seed) * 2 - 1;
-    seed = random(seed);
-
-    double z = -1;
-    seed = random(seed);
-
-    double r = randomDouble(seed) * 0.2;
-    seed = random(seed);
-
-    return Sphere{{x, y, z}, r};
-}
-
 int main()
 {
     Scene scene;

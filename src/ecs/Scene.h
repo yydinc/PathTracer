@@ -63,6 +63,13 @@ class Scene
     }
 
     template<class T>
+    void addComponent(size_t entityId, const T &&component)
+    {
+        m_entityDescriptors[entityId].mask.set(getComponentId<T>());
+        static_cast<ComponentStorage<T>*>(getComponentStorage<T>())->getElementAt(entityId) = component;
+    }
+
+    template<class T>
     void removeComponent(size_t entityId)
     {
         m_entityDescriptors[entityId].mask.set(getComponentId<T>(), false);

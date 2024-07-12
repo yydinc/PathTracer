@@ -11,7 +11,6 @@ add_executable(ray_tracing_in_one_weekend
         src/Vector3.h
         src/Color.h
         src/Point3.h
-        src/Ray.cpp
         src/Ray.h
         src/Sphere.cpp
         src/Sphere.h
