@@ -10,8 +10,8 @@ namespace PathTracer
 class Vector3
 {
  public:
-    Vector3() : x(0), y(0), z(0) {}
-
+    constexpr Vector3() : x(0), y(0), z(0) {}
+    constexpr Vector3(double m) : x(m), y(m), z(m) {}
     constexpr Vector3(double x, double y, double z) : x(x), y(y), z(z) {}
     constexpr Vector3(const Vector3 &other)  : x(other.x), y(other.y), z(other.z) {}
 

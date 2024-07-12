@@ -1,4 +1,5 @@
 #include "Camera.h"
+#include "Random.h"
 
 PathTracer::Color PathTracer::Camera::rayColor(const PathTracer::Scene &scene, const PathTracer::Ray &ray) const
 {
@@ -18,17 +19,23 @@ void PathTracer::Camera::render(const PathTracer::Scene &scene) const
 {
     std::cout << "P3\n" << m_imageWidth << ' ' << m_imageHeight << "\n255\n";
 
-    for (int j = 0; j < m_imageHeight; j++) {
+    for (int j = 0; j < m_imageHeight; j++)
+    {
         std::clog << "\rScanlines Remaining: " << (m_imageHeight - j) << ' ' << std::flush;
-        for (int i = 0; i < m_imageWidth; i++) {
-            Point3 pixelLocation = m_pixel00Location + m_deltaU*i + m_deltaV*j;
-            Vector3 rayDirection = pixelLocation - m_location;
+        for (int i = 0; i < m_imageWidth; i++)
+        {
+            Color pixelColor{0};
 
-            Ray r(m_location, rayDirection);
+            for(int sample = 0; sample < m_samplesPerPixel; sample++)
+            {
+                Point3 pixelLocation = m_pixel00Location + m_deltaU*(i + randomDouble({-0.5, 0.5})) + m_deltaV*(j + randomDouble({-0.5, 0.5}));
+                Vector3 rayDirection = pixelLocation - m_location;
 
-            Color pixelColor = rayColor(scene, r);
+                Ray r(m_location, rayDirection);
+                pixelColor += rayColor(scene, r);
+            }
 
-            writeColor(pixelColor);
+            writeColor(pixelColor * m_pixelColorScaler);
         }
     }
     std::clog << "\rDone.               \n";

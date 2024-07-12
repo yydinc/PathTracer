@@ -14,7 +14,7 @@ static inline uint32_t random()
     static uint32_t current_seed = 1233241;
     uint32_t state = current_seed * 747796405u + 2891336453u;
     uint32_t word = ((state >> ((state >> 28u) + 4u)) ^ state);
-    return (word >> 22u) ^ word;
+    return (current_seed = (word >> 22u) ^ word);
 }
 
 static inline double randomDouble()
