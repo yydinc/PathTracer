@@ -1,14 +1,14 @@
 #include <iostream>
 
-#include "Vector3.h"
-#include "Color.h"
-#include "Point3.h"
-#include "Ray.h"
+#include "core/Vector3.h"
+#include "core/Color.h"
+#include "core/Point3.h"
+#include "core/Ray.h"
 #include "ecs/Scene.h"
-#include "CollisionRecord.h"
-#include "Interval.h"
-#include "Random.h"
-#include "Camera.h"
+#include "core/CollisionRecord.h"
+#include "core/Interval.h"
+#include "core/Random.h"
+#include "render/Camera.h"
 
 using namespace PathTracer;
 

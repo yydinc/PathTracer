@@ -2,7 +2,7 @@
 #define COMPONENT_STORAGE_H
 
 
-#include "../Constants.h"
+#include "../core/Constants.h"
 
 namespace PathTracer
 {

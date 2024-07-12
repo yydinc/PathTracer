@@ -2,10 +2,10 @@
 #define CAMERA_H
 
 
-#include "Vector3.h"
-#include "Point3.h"
-#include "ecs/Scene.h"
-#include "Color.h"
+#include "../core/Vector3.h"
+#include "../core/Point3.h"
+#include "../ecs/Scene.h"
+#include "../core/Color.h"
 
 namespace PathTracer
 {

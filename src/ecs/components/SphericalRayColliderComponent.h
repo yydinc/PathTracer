@@ -2,8 +2,8 @@
 #define RAY_COLLIDER_COMPONENT_H
 
 
-#include "../../Shape.h"
-#include "../../Sphere.h"
+#include "../../core/Shape.h"
+#include "../../core/Sphere.h"
 
 namespace PathTracer
 {

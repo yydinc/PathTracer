@@ -1,29 +1,28 @@
 cmake_minimum_required(VERSION 3.26)
-project(ray_tracing_in_one_weekend)
+project(PathTracer)
 
 set(CMAKE_CXX_STANDARD 20)
 
 add_compile_definitions(DEBUG)
 
-add_executable(ray_tracing_in_one_weekend
-        PathTracer.h
-        src/Vector3.cpp
-        src/Vector3.h
-        src/Color.h
-        src/Point3.h
-        src/Ray.h
-        src/Sphere.cpp
-        src/Sphere.h
+add_executable(PathTracer
+        src/core/Vector3.cpp
+        src/core/Vector3.h
+        src/core/Color.h
+        src/core/Point3.h
+        src/core/Ray.h
+        src/core/Sphere.cpp
+        src/core/Sphere.h
         src/ecs/Scene.h
         src/ecs/components/SphericalRayColliderComponent.h
-        src/Shape.h
-        src/CollisionRecord.h
-        src/Interval.h
-        src/Random.h
-        src/Constants.h
+        src/core/Shape.h
+        src/core/CollisionRecord.h
+        src/core/Interval.h
+        src/core/Random.h
+        src/core/Constants.h
         src/ecs/EntityDescriptor.h
         src/ecs/ComponentStorage.h
         src/main.cpp
-        src/Camera.cpp
-        src/Camera.h
+        src/render/Camera.cpp
+        src/render/Camera.h
 )

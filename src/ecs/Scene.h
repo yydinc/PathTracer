@@ -18,6 +18,9 @@ class Scene
 {
  public:
     Scene() = default;
+    explicit Scene(const char *fileName)
+    {
+    }
 
     ~Scene()
     {

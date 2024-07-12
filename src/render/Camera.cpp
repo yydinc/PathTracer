@@ -1,5 +1,5 @@
 #include "Camera.h"
-#include "Random.h"
+#include "../core/Random.h"
 
 PathTracer::Color PathTracer::Camera::rayColor(const PathTracer::Scene &scene, const PathTracer::Ray &ray) const
 {

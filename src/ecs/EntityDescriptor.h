@@ -2,7 +2,7 @@
 #define ENTITY_DESCRIPTOR_H
 
 
-#include "../Constants.h"
+#include "../core/Constants.h"
 
 namespace PathTracer
 {
