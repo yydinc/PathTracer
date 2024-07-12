@@ -10,24 +10,24 @@ namespace PathTracer
 class Interval
 {
  public:
-    Interval(double start, double end) : m_start(start), m_end(end) {}
-    Interval() : m_start(-infinity), m_end(infinity) {}
+    Interval(double start, double end) : start(start), end(end) {}
+    Interval() : start(-infinity), end(infinity) {}
     ~Interval() = default;
 
     inline bool contains(double d) const
     {
-        return (m_start <= d) && (d <= m_end);
+        return (start <= d) && (d <= end);
     }
 
     inline bool surrounds(double d) const
     {
-        return (m_start < d) && (d < m_end);
+        return (start < d) && (d < end);
     }
 
     static const Interval empty, universe;
 
- private:
-    double m_start, m_end;
+ public:
+    double start, end;
 };
 
 inline const Interval Interval::empty = Interval{infinity, -infinity};

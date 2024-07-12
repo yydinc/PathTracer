@@ -31,6 +31,9 @@ class Camera
     double m_viewportHeight = 2.0;
     double m_viewportWidth = m_viewportHeight * (static_cast<double>(m_imageWidth)/m_imageHeight);
 
+    int m_samplesPerPixel = 100;
+    double m_pixelColorScaler = 1.0 / m_samplesPerPixel;
+
     Vector3 m_viewportU{m_viewportWidth, 0, 0};
     Vector3 m_viewportV{0, -m_viewportHeight, 0};
 
