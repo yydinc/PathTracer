@@ -12,7 +12,7 @@
 namespace PathTracer::FileParser
 {
 
-std::optional<Scene> parseSceneFile(const std::string &sceneFileName);
+Scene parseSceneFile(const std::string &sceneFileName);
 
 };
 

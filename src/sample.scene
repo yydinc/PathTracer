@@ -13,3 +13,10 @@ Entities:
                 Y: 0.8
                 Z: -1
                 R: 0.1
+    3:
+        SphericalRayColliderComponent:
+            Sphere:
+                X: 3
+                Y: 4
+                Z: -5
+                R: 1

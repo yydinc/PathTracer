@@ -4,7 +4,7 @@
 namespace PathTracer::FileParser
 {
 
-std::optional<Camera> parseCameraFile(const std::string &cameraFileName)
+Camera parseCameraFile(const std::string &cameraFileName)
 {
     if(!cameraFileName.ends_with(".camera"))
     {
@@ -12,49 +12,16 @@ std::optional<Camera> parseCameraFile(const std::string &cameraFileName)
         return {};
     }
 
-    auto parseResult = parseFile(cameraFileName);
+    FileNode *fileRoot = parseFile(cameraFileName);
 
-    if(!parseResult)
-    {
-        return {};
-    }
-
-    FileParser::FileNode *fileRoot = parseResult.value();
-
-    double x, y, z, aspectRatio, focalLength, viewportHeight;
-    int imageWidth, samplesPerPixel;
-
-    auto cameraXQuery = (*fileRoot)["X"];
-    if(!cameraXQuery) return {};
-    x = std::stod(cameraXQuery.value()->value);
-
-    auto cameraYQuery = (*fileRoot)["Y"];
-    if(!cameraYQuery) return {};
-    y = std::stod(cameraYQuery.value()->value);
-
-    auto cameraZQuery = (*fileRoot)["Z"];
-    if(!cameraXQuery) return {};
-    z = std::stod(cameraZQuery.value()->value);
-
-    auto cameraAspectRatioQuery = (*fileRoot)["AspectRatio"];
-    if(!cameraAspectRatioQuery) return {};
-    aspectRatio = std::stod(cameraAspectRatioQuery.value()->value);
-
-    auto cameraImageWidthQuery = (*fileRoot)["ImageWidth"];
-    if(!cameraImageWidthQuery) return {};
-    imageWidth = std::stoi(cameraImageWidthQuery.value()->value);
-
-    auto cameraFocalLengthQuery = (*fileRoot)["FocalLength"];
-    if(!cameraFocalLengthQuery) return {};
-    focalLength = std::stod(cameraFocalLengthQuery.value()->value);
-
-    auto cameraViewportHeightQuery = (*fileRoot)["ViewportHeight"];
-    if(!cameraViewportHeightQuery) return {};
-    viewportHeight = std::stod(cameraViewportHeightQuery.value()->value);
-
-    auto cameraSamplesPerPixelQuery = (*fileRoot)["SamplesPerPixel"];
-    if(!cameraSamplesPerPixelQuery) return {};
-    samplesPerPixel = std::stoi(cameraSamplesPerPixelQuery.value()->value);
+    double x = fileRoot->getDouble("X");
+    double y = fileRoot->getDouble("Y");
+    double z = fileRoot->getDouble("Z");
+    double aspectRatio = fileRoot->getDouble("AspectRatio");
+    int imageWidth = fileRoot->getInt("ImageWidth");
+    double focalLength = fileRoot->getDouble("FocalLength");
+    double viewportHeight = fileRoot->getDouble("ViewportHeight");
+    int samplesPerPixel = fileRoot->getInt("SamplesPerPixel");
 
     return Camera{{x, y, z}, aspectRatio, imageWidth, focalLength, viewportHeight, samplesPerPixel};
 }

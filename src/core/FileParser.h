@@ -11,6 +11,17 @@ namespace PathTracer::FileParser
 
 constexpr static int INDENTATION_SPACES = 4;
 
+
+ class FileParserException : public std::exception
+ {
+  public:
+     const char * what() const noexcept override
+     {
+         return "FileParserException!";
+     }
+ };
+
+
 class FileNode
 {
  public:
@@ -24,17 +35,20 @@ class FileNode
         }
     }
 
-    inline void appendToName(char c) {name += c;}
-    inline void appendToValue(char c) {value += c;}
-    inline std::optional<FileNode*> operator[](const std::string &childName)
+    inline void appendToName(char c) {name += c; }
+    inline void appendToValue(char c) {value += c; }
+
+    inline FileNode *operator[](const std::string &childName)
     {
         for(int i = 0; i < childrenCount; i++)
         {
             if(children[i]->name == childName) return children[i];
         }
 
-        return {};
+        throw FileParserException();
     }
+    inline double getDouble(const std::string &childName) { return std::stod((*this)[childName]->value); }
+    inline int getInt(const std::string &childName) { return std::stoi((*this)[childName]->value); }
 
  public:
     std::string name;
@@ -44,10 +58,10 @@ class FileNode
     std::array<FileNode*, 10> children{};
     int childrenCount = 0;
 
-    FileNode* parent = nullptr;
+    FileNode *parent = nullptr;
 };
 
-std::optional<FileNode*> parseFile(const std::string &fileName);
+FileNode *parseFile(const std::string &fileName);
 
 };
 

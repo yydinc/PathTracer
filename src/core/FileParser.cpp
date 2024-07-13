@@ -4,37 +4,13 @@
 
 namespace PathTracer::FileParser
 {
+enum AppendMode {AppendToName, AppendToValue};
 
-static void printFileNode(FileNode *root)
+static FileNode *addChild(FileNode *root)
 {
-    for (int i = 0; i < root->depth; i++) std::cout << "    ";
-    std::cout << root->name << ": ";
+    if(!root || root->childrenCount == root->children.size()) throw FileParserException();
 
-    if (root->value.empty()) {
-        std::cout << "\n";
-        for (int i = 0; i < root->childrenCount; i++) {
-            printFileNode(root->children[i]);
-        }
-    } else {
-        std::cout << root->value << "\n";
-    }
-}
-
-static void printFileStructure(const char *fileName)
-{
-    auto parsedFile = parseFile(fileName);
-
-
-    if (!parsedFile.has_value()) return;
-
-    FileNode *fileRoot = parsedFile.value();
-
-    printFileNode(fileRoot);
-}
-
-static bool checkFileExtension(std::string &fileName, std::string &fileExtension)
-{
-    return fileName.ends_with(fileExtension);
+    return (root->children[root->childrenCount++] = new FileNode(root));
 }
 
 static bool getNonEmptyLine(std::ifstream &stream, std::string &line)
@@ -61,14 +37,13 @@ static int indentationCount(std::string &line)
 {
     int indentation = countIndentationSpaces(line);
     if(indentation % INDENTATION_SPACES != 0) {
-        std::cerr << "Indentation error in file!";
-        return -1;
+        throw FileParserException();
     }
 
     return countIndentationSpaces(line) / INDENTATION_SPACES;
 }
 
-static std::optional<FileNode*> getParentAtDepth(FileNode *fileNode, int depth)
+static FileNode *getParentAtDepth(FileNode *fileNode, int depth)
 {
     while(fileNode)
     {
@@ -76,47 +51,14 @@ static std::optional<FileNode*> getParentAtDepth(FileNode *fileNode, int depth)
         fileNode = fileNode->parent;
     }
 
-    return {};
+    throw FileParserException();
 }
 
-std::optional<FileNode*> parseFile(const std::string &fileName)
+static void parseLine(std::string &line, FileNode *root)
 {
+    AppendMode appendMode = AppendToName;
 
-    std::array<std::string, 200> tokenStack;
-    size_t stackTop = 0;
-
-    std::ifstream fileInputStream(fileName);
-
-    if(!fileInputStream.is_open())
-    {
-        std::cerr << "File cannot be opened!\n";
-        return {};
-    }
-
-    std::string line;
-
-    enum ActionMode {AppendToName, AppendToValue};
-
-    ActionMode appendMode = AppendToName;
-    FileNode* root = new FileNode;
-
-    while (getNonEmptyLine(fileInputStream, line))
-    {
-        int depth = indentationCount(line);
-
-        auto queryResult = getParentAtDepth(root, depth-1);
-
-        if(!queryResult.has_value())
-        {
-            std::cerr << "Indentation error, cannot parse file!";
-            return {};
-        }
-
-        root = queryResult.value();
-        root->children[root->childrenCount++] = new FileNode(root);
-        root = root->children[root->childrenCount - 1];
-
-        for(char c : line)
+    for(char c : line)
         {
             if(c == ' ')
             {
@@ -124,7 +66,8 @@ std::optional<FileNode*> parseFile(const std::string &fileName)
             }
             else if(c == ':')
             {
-                appendMode = AppendToValue;
+                if(appendMode != AppendToValue) appendMode = AppendToValue;
+                else throw FileParserException();
             }
             else if(appendMode == AppendToName)
             {
@@ -135,8 +78,25 @@ std::optional<FileNode*> parseFile(const std::string &fileName)
                 root->appendToValue(c);
             }
         }
+}
 
-        appendMode = AppendToName;
+FileNode *parseFile(const std::string &fileName)
+{
+    std::ifstream fileInputStream(fileName);
+
+    std::string line;
+
+    FileNode* root = new FileNode;
+
+    while (getNonEmptyLine(fileInputStream, line))
+    {
+        int depth = indentationCount(line);
+
+        root = getParentAtDepth(root, depth-1);
+
+        root = addChild(root);
+
+        parseLine(line, root);
     }
 
     return getParentAtDepth(root, -1);
