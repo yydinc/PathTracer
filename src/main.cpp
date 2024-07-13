@@ -9,24 +9,33 @@
 #include "core/Interval.h"
 #include "core/Random.h"
 #include "render/Camera.h"
+#include "core/FileParser.h"
+#include "ecs/SceneFileParser.h"
+#include "render/CameraFileParser.h"
 
 using namespace PathTracer;
 
 int main()
 {
-    Scene scene;
+    auto parsedScene = FileParser::parseSceneFile("../src/test.scene");
 
-    //  Scene initialization
-
-    for(int i = 0; i < 5; i++)
+    if(!parsedScene)
     {
-        size_t entityId = scene.addEntity();
-        scene.addComponent<SphericalRayColliderComponent>(entityId, {randomSphere()});
+        std::cerr << "Cannot generate scene from scene file!\n";
+        return 0;
     }
 
-    //  Writing image to the output in the ppm format
+    Scene scene = std::move(parsedScene.value());
 
-    Camera camera;
+    auto parsedCamera = FileParser::parseCameraFile("../src/test.camera");
+
+    if(!parsedCamera)
+    {
+        std::cerr << "Cannot generate camera from camera file!\n";
+        return 0;
+    }
+
+    Camera camera = parsedCamera.value();
 
     camera.render(scene);
 

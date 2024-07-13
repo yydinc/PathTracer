@@ -25,4 +25,10 @@ add_executable(PathTracer
         src/main.cpp
         src/render/Camera.cpp
         src/render/Camera.h
+        src/core/FileParser.h
+        src/ecs/SceneFileParser.h
+        src/render/CameraFileParser.h
+        src/core/FileParser.cpp
+        src/ecs/SceneFileParser.cpp
+        src/render/CameraFileParser.cpp
 )

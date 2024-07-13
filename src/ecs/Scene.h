@@ -18,8 +18,13 @@ class Scene
 {
  public:
     Scene() = default;
-    explicit Scene(const char *fileName)
+
+    Scene(Scene &&other) : m_entityCount(other.m_entityCount),
+                                 m_componentStorages(other.m_componentStorages),
+                                 m_entityDescriptors(other.m_entityDescriptors)
     {
+        std::fill(std::begin(other.m_componentStorages), std::end(other.m_componentStorages), nullptr);
+        other.~Scene();
     }
 
     ~Scene()
