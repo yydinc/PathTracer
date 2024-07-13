@@ -1,34 +1,26 @@
 #include <iostream>
 
-#include "core/Vector3.h"
-#include "core/Color.h"
-#include "core/Point3.h"
-#include "core/Ray.h"
 #include "ecs/Scene.h"
-#include "core/CollisionRecord.h"
-#include "core/Interval.h"
-#include "core/Random.h"
 #include "render/Camera.h"
+#include "ecs/SceneFileParser.h"
+#include "render/CameraFileParser.h"
 
 using namespace PathTracer;
 
 int main()
 {
-    Scene scene;
-
-    //  Scene initialization
-
-    for(int i = 0; i < 5; i++)
+    try
     {
-        size_t entityId = scene.addEntity();
-        scene.addComponent<SphericalRayColliderComponent>(entityId, {randomSphere()});
+        Scene scene = FileParser::parseSceneFile("../src/sample.scene");
+
+        Camera camera = FileParser::parseCameraFile("../src/sample.camera");
+
+        camera.render(scene);
     }
-
-    //  Writing image to the output in the ppm format
-
-    Camera camera;
-
-    camera.render(scene);
+    catch (FileParser::FileParserException)
+    {
+        std::cerr << "An error occured while trying to parse files, terminating the program!";
+    }
 
     return 0;
 }

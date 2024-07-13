@@ -1,0 +1,22 @@
+Entities:
+    1:
+        SphericalRayColliderComponent:
+            Sphere:
+                X: 0
+                Y: 0
+                Z: -1
+                R: 0.5
+    2:
+        SphericalRayColliderComponent:
+            Sphere:
+                X: 0
+                Y: 0.8
+                Z: -1
+                R: 0.1
+    3:
+        SphericalRayColliderComponent:
+            Sphere:
+                X: 3
+                Y: 4
+                Z: -5
+                R: 1

@@ -14,34 +14,40 @@ class Camera
 {
  public:
     Camera() = default;
+    Camera(const Point3 &location, double aspectRatio, int imageWidth, double focalLength, double viewportHeight, int samplesPerPixel) :
+        m_location(location), m_aspectRatio(aspectRatio), m_imageWidth(imageWidth), m_focalLength(focalLength), m_viewportHeight(viewportHeight), m_samplesPerPixel(samplesPerPixel)
+    {
+        initialize();
+    }
     ~Camera() = default;
 
+    void initialize();
     Color rayColor(const Scene &scene, const Ray &ray) const;
     void render(const Scene &scene) const;
 
  private:
-    Point3 m_location{0, 0, 0};
+    Point3 m_location;
 
-    double m_aspectRatio = 16.0 / 9.0;
+    double m_aspectRatio;
 
-    int m_imageWidth = 480;
-    int m_imageHeight = static_cast<int>(m_imageWidth/m_aspectRatio);
+    int m_imageWidth;
+    int m_imageHeight;
 
-    double m_focalLength = 1.0;
-    double m_viewportHeight = 2.0;
-    double m_viewportWidth = m_viewportHeight * (static_cast<double>(m_imageWidth)/m_imageHeight);
+    double m_focalLength;
+    double m_viewportHeight;
+    double m_viewportWidth;
 
-    int m_samplesPerPixel = 100;
-    double m_pixelColorScaler = 1.0 / m_samplesPerPixel;
+    int m_samplesPerPixel;
+    double m_pixelColorScaler;
 
-    Vector3 m_viewportU{m_viewportWidth, 0, 0};
-    Vector3 m_viewportV{0, -m_viewportHeight, 0};
+    Vector3 m_viewportU;
+    Vector3 m_viewportV;
 
-    Vector3 m_deltaU = m_viewportU / m_imageWidth;
-    Vector3 m_deltaV = m_viewportV / m_imageHeight;
+    Vector3 m_deltaU;
+    Vector3 m_deltaV;
 
-    Point3 m_viewportUpperLeft = m_location - Vector3(0, 0, m_focalLength) - m_viewportU/2 -m_viewportV/2;
-    Point3 m_pixel00Location = m_viewportUpperLeft + (m_deltaU*0.5 + m_deltaV*0.5);
+    Point3 m_viewportUpperLeft;
+    Point3 m_pixel00Location;
 
 };
 
