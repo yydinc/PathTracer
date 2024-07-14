@@ -31,4 +31,6 @@ add_executable(PathTracer
         src/core/FileParser.cpp
         src/ecs/SceneFileParser.cpp
         src/render/CameraFileParser.cpp
+        src/core/Timer.h
+        src/ecs/components/TransformComponent.h
 )
