@@ -5,11 +5,12 @@
 #include <limits>
 
 #include "Interval.h"
+#include "Vector3.h"
 
 namespace PathTracer
 {
 
-static inline uint32_t random()
+inline uint32_t random()
 {
     static uint32_t current_seed = 1233241;
     uint32_t state = current_seed * 747796405u + 2891336453u;
@@ -17,55 +18,45 @@ static inline uint32_t random()
     return (current_seed = (word >> 22u) ^ word);
 }
 
-static inline double randomDouble()
+inline double randomDouble()
 {
     uint32_t seed = random();
     return (double)seed / (double)std::numeric_limits<uint32_t>::max();
 }
 
-static inline double randomDouble(const Interval &interval)
+inline double randomDouble(const Interval &interval)
 {
     return randomDouble() * interval.end - interval.start;
 }
 
-static inline double randomDouble(const Interval &&interval)
+inline double randomDouble(const Interval &&interval)
 {
     return randomDouble() * interval.end - interval.start;
 }
 
-static inline Sphere randomSphere()
+inline Vector3 randomVector()
 {
-    return Sphere{{randomDouble(), randomDouble(), randomDouble()}, randomDouble()};
+    return {randomDouble(), randomDouble(), randomDouble()};
 }
 
-static inline Sphere randomSphere(const Interval &x, const Interval &y, const Interval &z, const Interval &r)
+inline Vector3 randomVector(const Interval &interval)
 {
-    return Sphere{{randomDouble(x), randomDouble(y), randomDouble(z)}, randomDouble(r)};
+    return {randomDouble(interval), randomDouble(interval), randomDouble(interval)};
 }
 
-static inline Sphere randomSphere(const Interval &&x, const Interval &&y, const Interval &&z, const Interval &&r)
+inline Vector3 randomVector(const Interval &&interval)
 {
-    return Sphere{{randomDouble(x), randomDouble(y), randomDouble(z)}, randomDouble(r)};
+    return {randomDouble(interval), randomDouble(interval), randomDouble(interval)};
 }
 
-static inline Sphere randomSphere(const Interval &xyz, const Interval &r)
+inline Vector3 randomVector(const Interval &x, const Interval &y, const Interval &z)
 {
-    return Sphere{{randomDouble(xyz), randomDouble(xyz), randomDouble(xyz)}, randomDouble(r)};
+    return {randomDouble(x), randomDouble(y), randomDouble(z)};
 }
 
-static inline Sphere randomSphere(const Interval &&xyz, const Interval &&r)
+inline Vector3 randomVector(const Interval &&x, const Interval &&y, const Interval &&z)
 {
-    return Sphere{{randomDouble(xyz), randomDouble(xyz), randomDouble(xyz)}, randomDouble(r)};
-}
-
-static inline Sphere randomSphere(const Interval &xyzr)
-{
-    return Sphere{{randomDouble(xyzr), randomDouble(xyzr), randomDouble(xyzr)}, randomDouble(xyzr)};
-}
-
-static inline Sphere randomSphere(const Interval &&xyzr)
-{
-    return Sphere{{randomDouble(xyzr), randomDouble(xyzr), randomDouble(xyzr)}, randomDouble(xyzr)};
+    return {randomDouble(x), randomDouble(y), randomDouble(z)};
 }
 
 };

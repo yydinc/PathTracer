@@ -1,22 +1,38 @@
 #include "SceneFileParser.h"
+#include "../ecs/components/TransformComponent.h"
 
 namespace PathTracer::FileParser
 {
 
 static void parseComponent(FileNode *componentRoot, Scene &scene, size_t entityId)
 {
-    if(componentRoot->name == "SphericalRayColliderComponent")
+    if(componentRoot->name == "RayColliderComponent")
     {
-        double x, y, z, r;
+        double r;
+        ColliderType c;
 
-        FileNode *sphereRoot = (*componentRoot)["Sphere"];
+        r = componentRoot->getDouble("R");
 
-        x = sphereRoot->getDouble("X");
-        y = sphereRoot->getDouble("Y");
-        z = sphereRoot->getDouble("Z");
-        r = sphereRoot->getDouble("R");
+        if((*componentRoot)["Type"]->value == "Spherical")
+        {
+            c = ColliderType::Spherical;
+        }
+        else
+        {
+            throw FileParserException();
+        }
 
-        scene.addComponent<SphericalRayColliderComponent>(entityId, {{{x, y, z}, r}});
+        scene.addComponent<RayColliderComponent>(entityId, {c, r});
+    }
+    else if(componentRoot->name == "TransformComponent")
+    {
+        double x, y, z;
+
+        x = componentRoot->getDouble("X");
+        y = componentRoot->getDouble("Y");
+        z = componentRoot->getDouble("Z");
+
+        scene.addComponent<TransformComponent>(entityId, {{x, y, z}});
     }
     else
     {

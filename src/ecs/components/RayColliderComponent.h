@@ -1,16 +1,15 @@
 #ifndef RAY_COLLIDER_COMPONENT_H
 #define RAY_COLLIDER_COMPONENT_H
 
-
-#include "../../core/Shape.h"
-#include "../../core/Sphere.h"
-
 namespace PathTracer
 {
 
-struct SphericalRayColliderComponent
+enum ColliderType { Spherical };
+
+struct RayColliderComponent
 {
-    Sphere sphere;
+    ColliderType type;
+    double radius;
 };
 
 };

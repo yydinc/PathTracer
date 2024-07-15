@@ -11,11 +11,8 @@ add_executable(PathTracer
         src/core/Color.h
         src/core/Point3.h
         src/core/Ray.h
-        src/core/Sphere.cpp
-        src/core/Sphere.h
         src/ecs/Scene.h
-        src/ecs/components/SphericalRayColliderComponent.h
-        src/core/Shape.h
+        src/ecs/components/RayColliderComponent.h
         src/core/CollisionRecord.h
         src/core/Interval.h
         src/core/Random.h
@@ -33,4 +30,6 @@ add_executable(PathTracer
         src/render/CameraFileParser.cpp
         src/core/Timer.h
         src/ecs/components/TransformComponent.h
+        src/ecs/systems/RayCollisionDetectionSystem.h
+        src/ecs/systems/RayCollisionDetectionSystem.cpp
 )
