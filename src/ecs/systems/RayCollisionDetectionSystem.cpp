@@ -67,8 +67,11 @@ optional<CollisionRecord> collide(const TransformComponent &transformComponent,
                                   const RayColliderComponent &collider,
                                   const Ray &ray, const Interval &interval)
 {
+      //  TODO: This part of the code is causing application to slow down in release and debug builds
+      //  TODO: Optimize this part!
+
     auto collideFunction = s_functionMap[collider.type];
-    return collideFunction(transformComponent, collider, ray, interval);
+    return s_functionMap[collider.type](transformComponent, collider, ray, interval);
 }
 
 optional<CollisionRecord> RayCollisionDetectionSystem::collideFirst(const Scene &scene, const Ray &ray, const Interval &interval)
