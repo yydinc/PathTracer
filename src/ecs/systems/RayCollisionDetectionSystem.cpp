@@ -1,4 +1,4 @@
-#include <unordered_map>
+#include <array>
 #include <functional>
 
 #include "RayCollisionDetectionSystem.h"
@@ -10,7 +10,7 @@ using CollisionFunction = std::function<optional<CollisionRecord>(const Transfor
                                                                   const RayColliderComponent &,
                                                                   const Ray &, const Interval &)>;
 
-static std::unordered_map<ColliderType, CollisionFunction> s_functionMap;
+static std::array<CollisionFunction, MAX_RAY_COLLIDER_TYPE> s_functionMap;
 
 inline bool isFrontFace(const Ray& r, const Vector3& normal)
 {
@@ -57,20 +57,15 @@ optional<CollisionRecord> collideWithSphericalCollider(const TransformComponent 
 
 void initializeFunctionMap()
 {
-    s_functionMap.clear();
-    s_functionMap[ColliderType::Spherical] = collideWithSphericalCollider;
-
       //  Add new collision functions if new collider types are added
+
+    s_functionMap[ColliderType::Spherical] = collideWithSphericalCollider;
 }
 
 optional<CollisionRecord> collide(const TransformComponent &transformComponent,
                                   const RayColliderComponent &collider,
                                   const Ray &ray, const Interval &interval)
 {
-      //  TODO: This part of the code is causing application to slow down in release and debug builds
-      //  TODO: Optimize this part!
-
-    auto collideFunction = s_functionMap[collider.type];
     return s_functionMap[collider.type](transformComponent, collider, ray, interval);
 }
 
