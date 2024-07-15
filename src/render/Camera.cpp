@@ -8,13 +8,13 @@ namespace PathTracer
 
 void Camera::render(const Scene &scene) const
 {
-    std::cout << "P3\n" << m_imageWidth << ' ' << m_imageHeight << "\n255\n";
-
+//    std::cout << "P3\n" << m_imageWidth << ' ' << m_imageHeight << "\n255\n";
+    Timer t;
     for (int j = 0; j < m_imageHeight; j++) {
-        std::clog << "\rScanlines Remaining: " << (m_imageHeight - j) << ' ' << std::flush;
+//        std::clog << "\rScanlines Remaining: " << (m_imageHeight - j) << ' ' << std::flush;
         for (int i = 0; i < m_imageWidth; i++) {
             Color pixelColor{0};
-
+            t.start();
             for (int sample = 0; sample < m_samplesPerPixel; sample++) {
                 Point3 pixelLocation = m_pixel00Location + m_deltaU * (i + randomDouble({-0.5, 0.5})) +
                                        m_deltaV * (j + randomDouble({-0.5, 0.5}));
@@ -23,8 +23,9 @@ void Camera::render(const Scene &scene) const
                 Ray r(m_location, rayDirection);
                 pixelColor += RayCollisionDetectionSystem::rayColor(scene, r);
             }
-
-            writeColor(pixelColor * m_pixelColorScaler);
+            t.stop();
+            std::cout << t.durationMiliSec() << "ms (" << t.durationMicroSec() << " µs)\n";
+//            writeColor(pixelColor * m_pixelColorScaler);
         }
     }
     std::clog << "\rDone.               \n";

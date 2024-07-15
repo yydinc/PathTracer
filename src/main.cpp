@@ -12,27 +12,21 @@ using namespace PathTracer;
 
 int main()
 {
-    try
+
+//    Scene scene = FileParser::parseSceneFile("../src/sample.scene");
+
+    Scene scene;
+
+    for(int i = 0; i < MAX_ENTITIES; i++)
     {
-//        Scene scene = FileParser::parseSceneFile("../src/sample.scene");
-
-        Scene scene;
-
-        for(int i = 0; i < MAX_ENTITIES; i++)
-        {
-            size_t entityId = scene.addEntity();
-            scene.addComponent<TransformComponent>(entityId, {randomVector({-1000, 1000})});
-            scene.addComponent<RayColliderComponent>(entityId, {ColliderType::Spherical, randomDouble({1, 40})});
-        }
-
-        Camera camera = FileParser::parseCameraFile("../src/sample.camera");
-
-        camera.render(scene);
+        size_t entityId = scene.addEntity();
+        scene.addComponent<TransformComponent>(entityId, {randomVector({-100, 100})});
+        scene.addComponent<RayColliderComponent>(entityId, {ColliderType::Spherical, randomDouble({-100, 100})});
     }
-    catch (FileParser::FileParserException &ex)
-    {
-        std::cerr << "An error occurred while trying to parse files, terminating the program!";
-    }
+
+    Camera camera = FileParser::parseCameraFile("../src/sample.camera");
+
+    camera.render(scene);
 
     return 0;
 }
