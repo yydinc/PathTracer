@@ -59,7 +59,35 @@ void initializeFunctionMap()
 {
       //  Add new collision functions if new collider types are added
 
-    s_functionMap[ColliderType::Spherical] = collideWithSphericalCollider;
+    s_functionMap[ColliderType::Spherical] = [](const TransformComponent &transform,
+                                                       const RayColliderComponent &collider,
+                                                           const Ray &ray, const Interval &interval){
+        Vector3 originToCenter = transform.position - ray.origin();
+        double a = ray.direction().lengthSquared();
+        double h = dot(ray.direction(), originToCenter);
+        double c = originToCenter.lengthSquared() - collider.radius*collider.radius;
+
+        double discriminant = h*h - a*c;
+
+        if(discriminant < 0) return optional<CollisionRecord>{};
+
+        double sqrtDiscriminant = sqrt(discriminant);
+
+        double root = (h - sqrtDiscriminant) / a;
+
+        if(!interval.contains(root))
+        {
+            root = (h + sqrtDiscriminant) / a;
+            if(!interval.contains(root))
+            {
+                return optional<CollisionRecord>{};
+            }
+        }
+
+        Vector3 outwardNormal = (ray.at(root) - transform.position) / collider.radius;
+
+        return std::optional<CollisionRecord>{CollisionRecord{ray.at(root), outwardNormal, root, isFrontFace(ray, outwardNormal)}};
+    };
 }
 
 optional<CollisionRecord> collide(const TransformComponent &transformComponent,
