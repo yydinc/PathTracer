@@ -22,7 +22,7 @@ class ComponentStorage : public BaseComponentStorage
 
     inline T &getElementAt(size_t index)
     {
-        return *(m_components.begin() + index);
+        return *(m_components.data() + index);
     }
 
  private:

@@ -22,7 +22,6 @@ class Camera
     ~Camera() = default;
 
     void initialize();
-    Color rayColor(const Scene &scene, const Ray &ray) const;
     void render(const Scene &scene) const;
 
  private:
