@@ -20,17 +20,17 @@ int main()
         {
             size_t entityId = scene.addEntity();
             scene.addComponent<SphericalRayColliderComponent>(entityId,
-                                                              {{{randomDouble({-100, 100}), randomDouble({-100, 100}),
-                                                                 randomDouble({-100, 100})}, randomDouble({-100, 100})}});
+                                                              {{{randomDouble({-1, 1}), randomDouble({-1, 1}),
+                                                                 randomDouble({-1, 1})}, randomDouble({0, 1})}});
         }
 
         Camera camera = FileParser::parseCameraFile("../src/sample.camera");
 
         camera.render(scene);
     }
-    catch (FileParser::FileParserException)
+    catch (FileParser::FileParserException &ex)
     {
-        std::cerr << "An error occured while trying to parse files, terminating the program!";
+        std::cerr << "An error occurred while trying to parse files, terminating the program!";
     }
 
     return 0;

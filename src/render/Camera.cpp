@@ -22,6 +22,7 @@ void Camera::render(const Scene &scene) const
 {
 //    std::cout << "P3\n" << m_imageWidth << ' ' << m_imageHeight << "\n255\n";
     Timer t;
+    long long int totalTime = 0;
     for (int j = 0; j < m_imageHeight; j++) {
 //        std::clog << "\rScanlines Remaining: " << (m_imageHeight - j) << ' ' << std::flush;
         for (int i = 0; i < m_imageWidth; i++) {
@@ -39,11 +40,14 @@ void Camera::render(const Scene &scene) const
             }
 
             t.stop();
-            std::cout << t.durationMiliSec() << "ms (" << t.durationMicroSec() << " µs)\n";
+            totalTime += t.durationMicroSec();
+            std::cout << "\r( i: " << i << ", j: " << j << ") - " << t.durationMiliSec() << "ms (" << t.durationMicroSec() << " µs)" << std::flush;
+
 //            writeColor(pixelColor * m_pixelColorScaler);
         }
     }
-//    std::clog << "\rDone.               \n";
+
+    std::clog << "\rAverage time: " << (totalTime / (m_imageHeight * m_imageWidth * m_samplesPerPixel)) * 0.001 << "ms\n";
 }
 
 void Camera::initialize()
