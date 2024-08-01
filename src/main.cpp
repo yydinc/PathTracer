@@ -13,16 +13,7 @@ using namespace PathTracer;
 int main()
 {
 
-//    Scene scene = FileParser::parseSceneFile("../src/sample.scene");
-
-    Scene scene;
-
-    for(int i = 0; i < MAX_ENTITIES; i++)
-    {
-        size_t entityId = scene.addEntity();
-        scene.addComponent<TransformComponent>(entityId, {randomVector({-1, 1})});
-        scene.addComponent<RayColliderComponent>(entityId, {ColliderType::Spherical, randomDouble({0, 1})});
-    }
+    Scene scene = FileParser::parseSceneFile("../src/sample.scene");
 
     Camera camera = FileParser::parseCameraFile("../src/sample.camera");
 

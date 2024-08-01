@@ -8,14 +8,11 @@ namespace PathTracer
 
 void Camera::render(const Scene &scene) const
 {
-//    std::cout << "P3\n" << m_imageWidth << ' ' << m_imageHeight << "\n255\n";
-    Timer t;
-    long long int totalTime = 0;
+    std::cout << "P3\n" << m_imageWidth << ' ' << m_imageHeight << "\n255\n";
     for (int j = 0; j < m_imageHeight; j++) {
-//        std::clog << "\rScanlines Remaining: " << (m_imageHeight - j) << ' ' << std::flush;
+        std::clog << "\rScanlines Remaining: " << (m_imageHeight - j) << ' ' << std::flush;
         for (int i = 0; i < m_imageWidth; i++) {
             Color pixelColor{0};
-            t.start();
             for (int sample = 0; sample < m_samplesPerPixel; sample++) {
                 Point3 pixelLocation = m_pixel00Location + m_deltaU * (i + randomDouble({-0.5, 0.5})) +
                                        m_deltaV * (j + randomDouble({-0.5, 0.5}));
@@ -24,13 +21,10 @@ void Camera::render(const Scene &scene) const
                 Ray r(m_location, rayDirection);
                 pixelColor += RayCollisionDetectionSystem::rayColor(scene, r);
             }
-            t.stop();
-            totalTime += t.durationMicroSec();
-            std::cout << "\r(i: " << i << ", j: " << j << ") - " << t.durationMiliSec() << "ms (" << t.durationMicroSec() << " µs)" << std::flush;
-//            writeColor(pixelColor * m_pixelColorScaler);
+            writeColor(pixelColor * m_pixelColorScaler);
         }
     }
-    std::clog << "\rAverage time: " << (totalTime / (m_imageHeight * m_imageWidth * m_samplesPerPixel)) * 0.001 << "ms\n" ;
+    std::clog << "\rDone            \n" ;
 }
 
 void Camera::initialize()
