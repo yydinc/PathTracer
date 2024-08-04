@@ -22,8 +22,9 @@ Camera parseCameraFile(const path &cameraFileName)
     double focalLength = fileRoot->getDouble("FocalLength");
     double viewportHeight = fileRoot->getDouble("ViewportHeight");
     int samplesPerPixel = fileRoot->getInt("SamplesPerPixel");
+    int maxDepth = fileRoot->getInt("MaxDepth");
 
-    return Camera{{x, y, z}, aspectRatio, imageWidth, focalLength, viewportHeight, samplesPerPixel};
+    return Camera{{x, y, z}, aspectRatio, imageWidth, focalLength, viewportHeight, samplesPerPixel, maxDepth};
 }
 
 };

@@ -7,11 +7,11 @@
 
 using namespace PathTracer;
 
-using CollisionFunction = std::function<optional<CollisionRecord>(const TransformComponent &,
-                                                                  const RayColliderComponent &,
-                                                                  const Ray &, const Interval &)>;
+using CollisionFunction = optional<CollisionRecord>(const TransformComponent &,
+                                                    const RayColliderComponent &,
+                                                    const Ray &, const Interval &);
 
-static std::array<CollisionFunction, MAX_RAY_COLLIDER_TYPE> s_functionMap;
+static std::array<CollisionFunction*, MAX_RAY_COLLIDER_TYPE> s_functionMap;
 
 inline bool isFrontFace(const Ray& r, const Vector3& normal)
 {
@@ -95,7 +95,7 @@ optional<CollisionRecord> collide(const TransformComponent &transformComponent,
                                   const RayColliderComponent &collider,
                                   const Ray &ray, const Interval &interval)
 {
-    return s_functionMap[collider.type](transformComponent, collider, ray, interval);
+    return (*s_functionMap[collider.type])(transformComponent, collider, ray, interval);
 }
 
 optional<CollisionRecord> RayIntersectionSystem::collideFirst(const Scene &scene, const Ray &ray, const Interval &interval)

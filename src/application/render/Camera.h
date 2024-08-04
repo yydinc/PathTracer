@@ -14,8 +14,8 @@ class Camera
 {
  public:
     Camera() = default;
-    Camera(const Point3 &location, double aspectRatio, int imageWidth, double focalLength, double viewportHeight, int samplesPerPixel) :
-        m_location(location), m_aspectRatio(aspectRatio), m_imageWidth(imageWidth), m_focalLength(focalLength), m_viewportHeight(viewportHeight), m_samplesPerPixel(samplesPerPixel)
+    Camera(const Point3 &location, double aspectRatio, int imageWidth, double focalLength, double viewportHeight, int samplesPerPixel, int maxDepth) :
+    m_location(location), m_aspectRatio(aspectRatio), m_imageWidth(imageWidth), m_focalLength(focalLength), m_viewportHeight(viewportHeight), m_samplesPerPixel(samplesPerPixel), m_maxDepth(maxDepth)
     {
         initialize();
     }
@@ -37,6 +37,7 @@ class Camera
     double m_viewportWidth;
 
     int m_samplesPerPixel;
+    int m_maxDepth;
     double m_pixelColorScaler;
 
     Vector3 m_viewportU;

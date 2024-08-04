@@ -19,7 +19,7 @@ void Camera::render(const Scene &scene) const
                 Vector3 rayDirection = pixelLocation - m_location;
 
                 Ray r(m_location, rayDirection);
-                pixelColor += RayIntersectionSystem::rayColor(scene, r, 10);
+                pixelColor += RayIntersectionSystem::rayColor(scene, r, m_maxDepth);
             }
             writeColor(pixelColor * m_pixelColorScaler);
         }
