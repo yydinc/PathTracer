@@ -1,5 +1,6 @@
 #include <optional>
 
+#include "Constants.h"
 #include "FileParser.h"
 
 namespace PathTracer::FileParser
@@ -80,7 +81,7 @@ static void parseLine(std::string &line, FileNode *root)
         }
 }
 
-FileNode *parseFile(const std::string &fileName)
+FileNode *parseFile(const path &fileName)
 {
     std::ifstream fileInputStream(fileName);
 

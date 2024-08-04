@@ -4,16 +4,16 @@
 
 #include <optional>
 
-#include "../Scene.h"
-#include "../../core/Color.h"
-#include "../../core/Ray.h"
-#include "../../core/CollisionRecord.h"
-#include "../../core/Interval.h"
+#include "Scene.h"
+#include "Color.h"
+#include "Ray.h"
+#include "CollisionRecord.h"
+#include "Interval.h"
 
-namespace PathTracer::RayCollisionDetectionSystem
+namespace PathTracer::RayIntersectionSystem
 {
 
-Color rayColor(const Scene &scene, const Ray &ray);
+Color rayColor(const Scene &scene, const Ray &ray, int depth);
 
 optional<CollisionRecord> collideFirst(const Scene &scene, const Ray &ray, const Interval &interval);
 

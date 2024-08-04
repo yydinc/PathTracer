@@ -5,31 +5,40 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_compile_definitions(DEBUG)
 
+include_directories(src/application/core
+                    src/application/render
+                    src/application/components
+                    src/application/systems
+                    src/application
+                    src/ecs)
+
 add_executable(PathTracer
-        src/core/Vector3.cpp
-        src/core/Vector3.h
-        src/core/Color.h
-        src/core/Point3.h
-        src/core/Ray.h
+        src/application/core/Vector3.cpp
+        src/application/core/Vector3.h
+        src/application/core/Color.h
+        src/application/core/Point3.h
+        src/application/core/Ray.h
         src/ecs/Scene.h
-        src/ecs/components/RayColliderComponent.h
-        src/core/CollisionRecord.h
-        src/core/Interval.h
-        src/core/Random.h
-        src/core/Constants.h
+        src/application/components/RayColliderComponent.h
+        src/application/core/CollisionRecord.h
+        src/application/core/Interval.h
+        src/application/core/Random.h
+        src/application/core/Constants.h
         src/ecs/EntityDescriptor.h
         src/ecs/ComponentStorage.h
         src/main.cpp
-        src/render/Camera.cpp
-        src/render/Camera.h
-        src/core/FileParser.h
-        src/ecs/SceneFileParser.h
-        src/render/CameraFileParser.h
-        src/core/FileParser.cpp
-        src/ecs/SceneFileParser.cpp
-        src/render/CameraFileParser.cpp
-        src/core/Timer.h
-        src/ecs/components/TransformComponent.h
-        src/ecs/systems/RayCollisionDetectionSystem.h
-        src/ecs/systems/RayCollisionDetectionSystem.cpp
+        src/application/render/Camera.cpp
+        src/application/render/Camera.h
+        src/application/core/FileParser.h
+        src/application/core/SceneFileParser.h
+        src/application/render/CameraFileParser.h
+        src/application/core/FileParser.cpp
+        src/application/core/SceneFileParser.cpp
+        src/application/render/CameraFileParser.cpp
+        src/application/core/Timer.h
+        src/application/components/TransformComponent.h
+        "src/application/systems/RayIntersectionSystem.h"
+        "src/application/systems/RayIntersectionSystem.cpp"
+        src/application/components/MaterialComponent.h
+        src/application/Application.h
 )

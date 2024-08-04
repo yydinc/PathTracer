@@ -1,6 +1,7 @@
 #ifndef RAY_COLLIDER_COMPONENT_H
 #define RAY_COLLIDER_COMPONENT_H
 
+
 namespace PathTracer
 {
 

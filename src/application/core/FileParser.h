@@ -15,7 +15,7 @@ constexpr static int INDENTATION_SPACES = 4;
  class FileParserException : public std::exception
  {
   public:
-     const char * what() const noexcept override
+     const char *what() const noexcept override
      {
          return "FileParserException!";
      }
@@ -61,7 +61,7 @@ class FileNode
     FileNode *parent = nullptr;
 };
 
-FileNode *parseFile(const std::string &fileName);
+FileNode *parseFile(const path &fileName);
 
 };
 

@@ -2,16 +2,16 @@ Entities:
     1:
         RayColliderComponent:
             Type: Spherical
-            R: 0.3
+            R: 0.5
         TransformComponent:
             X: 0
-            Y: 0.8
+            Y: 0
             Z: -1
     2:
         RayColliderComponent:
             Type: Spherical
-            R: 0.5
+            R: 100
         TransformComponent:
             X: 0
-            Y: 0.5
-            Z: -3
+            Y: -100.5
+            Z: -1

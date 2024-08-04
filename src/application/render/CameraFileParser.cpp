@@ -1,12 +1,12 @@
 #include "CameraFileParser.h"
-#include "../core/FileParser.h"
+#include "FileParser.h"
 
 namespace PathTracer::FileParser
 {
 
-Camera parseCameraFile(const std::string &cameraFileName)
+Camera parseCameraFile(const path &cameraFileName)
 {
-    if(!cameraFileName.ends_with(".camera"))
+    if(cameraFileName.extension() != ".camera")
     {
         std::cerr << "Wrong file extension (must be .camera)!";
         return {};

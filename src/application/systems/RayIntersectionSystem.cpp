@@ -1,8 +1,9 @@
 #include <array>
 #include <functional>
 
-#include "RayCollisionDetectionSystem.h"
-#include "../components/TransformComponent.h"
+#include "RayIntersectionSystem.h"
+#include "TransformComponent.h"
+#include "Random.h"
 
 using namespace PathTracer;
 
@@ -61,7 +62,7 @@ void initializeFunctionMap()
 
     s_functionMap[ColliderType::Spherical] = [](const TransformComponent &transform,
                                                        const RayColliderComponent &collider,
-                                                           const Ray &ray, const Interval &interval){
+                                                       const Ray &ray, const Interval &interval){
         Vector3 originToCenter = transform.position - ray.origin();
         double a = ray.direction().lengthSquared();
         double h = dot(ray.direction(), originToCenter);
@@ -97,7 +98,7 @@ optional<CollisionRecord> collide(const TransformComponent &transformComponent,
     return s_functionMap[collider.type](transformComponent, collider, ray, interval);
 }
 
-optional<CollisionRecord> RayCollisionDetectionSystem::collideFirst(const Scene &scene, const Ray &ray, const Interval &interval)
+optional<CollisionRecord> RayIntersectionSystem::collideFirst(const Scene &scene, const Ray &ray, const Interval &interval)
 {
     ONCE(initializeFunctionMap);
 
@@ -123,11 +124,14 @@ optional<CollisionRecord> RayCollisionDetectionSystem::collideFirst(const Scene 
     return (cRec.t < std::numeric_limits<double>::max()) ? cRec : optional<CollisionRecord>{} ;
 }
 
-Color RayCollisionDetectionSystem::rayColor(const Scene &scene, const Ray &ray)
+Color RayIntersectionSystem::rayColor(const Scene &scene, const Ray &ray, int depth)
 {
-    auto cRec = RayCollisionDetectionSystem::collideFirst(scene, ray, {-infinity, infinity});
+    if(depth == 0) return {0};
+    auto cRec = RayIntersectionSystem::collideFirst(scene, ray, {0.001, infinity});
     if (cRec) {
-        return 0.5 * Color(cRec->outwardNormal.x + 1, cRec->outwardNormal.y + 1, cRec->outwardNormal.z + 1);
+        Vector3 randomUnitV = randomUnitVector();
+        randomUnitV = dot(cRec->outwardNormal, randomUnitV) > 0 ? randomUnitV : -1 * randomUnitV;
+        return 0.5 * rayColor(scene, {cRec->point, randomUnitV}, depth-1);
     }
 
     Vector3 unitDirection = unitVector(ray.direction());

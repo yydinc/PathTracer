@@ -1,5 +1,5 @@
 #include "SceneFileParser.h"
-#include "../ecs/components/TransformComponent.h"
+#include "TransformComponent.h"
 
 namespace PathTracer::FileParser
 {
@@ -52,9 +52,9 @@ static void parseEntity(FileNode *entityRoot, Scene &scene)
     }
 }
 
-Scene parseSceneFile(const std::string &sceneFileName)
+Scene parseSceneFile(const path &sceneFileName)
 {
-    if(!sceneFileName.ends_with(".scene"))
+    if(sceneFileName.extension() != ".scene")
     {
         throw FileParserException();
     }
