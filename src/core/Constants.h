@@ -20,7 +20,7 @@ namespace PathTracer
 constexpr double infinity = std::numeric_limits<double>::infinity();
 constexpr double pi = 3.1415926535897932385;
 
-static constexpr size_t MAX_ENTITIES = 100000;
+static constexpr size_t MAX_ENTITIES = 10;
 static constexpr size_t MAX_COMPONENTS = 8;
 static constexpr size_t MAX_RAY_COLLIDER_TYPE = 1;
 
