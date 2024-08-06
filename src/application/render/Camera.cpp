@@ -24,7 +24,7 @@ void Camera::render(const Scene &scene) const
             writeColor(pixelColor * m_pixelColorScaler);
         }
     }
-    std::clog << "\rDone            \n" ;
+    std::clog << "\rDone                    \n" ;
 }
 
 void Camera::initialize()

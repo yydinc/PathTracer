@@ -24,6 +24,11 @@ class Interval
         return (start < d) && (d < end);
     }
 
+    inline double clamp(double d) const
+    {
+        return (d < start) ? start : ((d > end) ? end : d);
+    }
+
     static const Interval empty, universe;
 
  public:
