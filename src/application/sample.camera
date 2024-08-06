@@ -1,9 +1,17 @@
-X: 0
-Y: 0
-Z: 0
+Location:
+    X:-1
+    Y:1
+    Z:1
+LookAt:
+    X:0
+    Y:0
+    Z:-1
+ViewUp:
+    X:0
+    Y:1
+    Z:0
 AspectRatio: 1.77777777778
 ImageWidth: 800
-FocalLength: 1
-ViewportHeight: 2
-SamplesPerPixel: 500
+Fov: 90
+SamplesPerPixel: 50
 MaxDepth: 50
