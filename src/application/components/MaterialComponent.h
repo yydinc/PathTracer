@@ -2,15 +2,22 @@
 #define MATERIAL_COMPONENT_H
 
 
+#include "Color.h"
+
 namespace PathTracer
 {
 
-enum ReflectionType {Simple, TrueLambertian};
+enum MaterialType{Simple, TrueLambertian, Metal, Dielectrics};
 
 struct MaterialComponent
 {
-
-    ReflectionType reflectionType;
+    MaterialType materialType;
+    Color albedo;
+    union
+    {
+        struct { double refractionIndex; };
+        struct { double fuzz; };
+    };
 };
 
 };

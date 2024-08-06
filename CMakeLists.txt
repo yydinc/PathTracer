@@ -20,7 +20,7 @@ add_executable(PathTracer
         src/application/core/Ray.h
         src/ecs/Scene.h
         src/application/components/RayColliderComponent.h
-        src/application/core/CollisionRecord.h
+        src/application/core/RayIntersectionRecord.h
         src/application/core/Interval.h
         src/application/core/Random.h
         src/application/core/Constants.h
@@ -37,8 +37,10 @@ add_executable(PathTracer
         src/application/render/CameraFileParser.cpp
         src/application/core/Timer.h
         src/application/components/TransformComponent.h
-        "src/application/systems/RayIntersectionSystem.h"
-        "src/application/systems/RayIntersectionSystem.cpp"
+        src/application/systems/RayIntersectionSystem.h
+        src/application/systems/RayIntersectionSystem.cpp
         src/application/components/MaterialComponent.h
         src/application/Application.h
+        src/application/systems/RayScatteringSystem.h
+        src/application/systems/RayScatteringSystem.cpp
 )

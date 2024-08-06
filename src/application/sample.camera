@@ -5,5 +5,5 @@ AspectRatio: 1.77777777778
 ImageWidth: 800
 FocalLength: 1
 ViewportHeight: 2
-SamplesPerPixel: 100
-MaxDepth: 10
+SamplesPerPixel: 500
+MaxDepth: 50

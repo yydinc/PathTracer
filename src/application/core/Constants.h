@@ -23,8 +23,8 @@ constexpr double pi = 3.1415926535897932385;
 
 static constexpr size_t MAX_ENTITIES = 100000;
 static constexpr size_t MAX_COMPONENTS = 8;
-static constexpr size_t MAX_RAY_COLLIDER_TYPE = 1;
-static constexpr size_t MAX_SYSTEMS = 1;
+static constexpr size_t MAX_RAY_COLLIDER_TYPE = 2;
+static constexpr size_t MAX_MATERIAL_TYPE = 3;
 
 // C++ Std Usings
 

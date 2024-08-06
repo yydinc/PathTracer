@@ -1,5 +1,7 @@
 #include "SceneFileParser.h"
 #include "TransformComponent.h"
+#include "MaterialComponent.h"
+#include "Color.h"
 
 namespace PathTracer::FileParser
 {
@@ -33,6 +35,51 @@ static void parseComponent(FileNode *componentRoot, Scene &scene, size_t entityI
         z = componentRoot->getDouble("Z");
 
         scene.addComponent<TransformComponent>(entityId, {{x, y, z}});
+    }
+    else if(componentRoot->name == "MaterialComponent")
+    {
+        MaterialType mt;
+        if((*componentRoot)["MaterialType"]->value == "Simple")
+        {
+            mt = MaterialType::Simple;
+        }
+        else if((*componentRoot)["MaterialType"]->value == "TrueLambertian")
+        {
+            mt = MaterialType::TrueLambertian;
+        }
+        else if((*componentRoot)["MaterialType"]->value == "Metal")
+        {
+            mt = MaterialType::Metal;
+        }
+        else if((*componentRoot)["MaterialType"]->value == "Dielectrics")
+        {
+            mt = MaterialType::Dielectrics;
+        }
+        else
+        {
+            throw FileParserException();
+        }
+
+        Color albedo;
+
+        albedo.r = (*componentRoot)["Albedo"]->getDouble("R");
+        albedo.g = (*componentRoot)["Albedo"]->getDouble("G");
+        albedo.b = (*componentRoot)["Albedo"]->getDouble("B");
+
+        if(mt == MaterialType::Metal)
+        {
+            double fuzz = componentRoot->getDouble("Fuzz");
+            scene.addComponent<MaterialComponent>(entityId, {mt, albedo, fuzz});
+        }
+        else if(mt == MaterialType::Dielectrics)
+        {
+            double refractionIndex = componentRoot->getDouble("RefractionIndex");
+            scene.addComponent<MaterialComponent>(entityId, {mt, albedo, refractionIndex});
+        }
+        else
+        {
+            scene.addComponent<MaterialComponent>(entityId, {mt, albedo, 0});
+        }
     }
     else
     {

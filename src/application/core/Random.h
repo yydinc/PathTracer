@@ -73,6 +73,12 @@ inline Vector3 randomUnitVector()
     return unitVector(randomVectorInUnitSphere());
 }
 
+inline Vector3 randomUnitVectorOnHemisphere(const Vector3 &normal)
+{
+    Vector3 randomUnitV = randomUnitVector();
+    return dot(normal, randomUnitV) > 0 ? randomUnitV : -1 * randomUnitV;
+}
+
 };
 
 #endif  //  RANDOM_H

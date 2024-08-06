@@ -93,6 +93,17 @@ inline Vector3 cross(const Vector3 &v, const Vector3 &w)
             v.x*w.y - v.y*w.x};
 }
 
+inline Vector3 mirror(const Vector3& v, const Vector3& n) {
+    return v - 2*dot(v,n)*n;
+}
+
+inline Vector3 refract(const Vector3& v, const Vector3& n, double ri) {
+    auto cosTheta = dot(-1*v, n);
+    Vector3 perpendicular =  ri * (v + cosTheta*n);
+    Vector3 parallel = -std::sqrt(std::fabs(1.0 - perpendicular.lengthSquared())) * n;
+    return perpendicular + parallel;
+}
+
 inline std::ostream &operator<<(std::ostream &out, const Vector3 &v)
 {
     return out << "<" << v.x << ", " << v.y << ", " << v.z << ">";
