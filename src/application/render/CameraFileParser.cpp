@@ -1,12 +1,12 @@
 #include "CameraFileParser.h"
-#include "../core/FileParser.h"
+#include "FileParser.h"
 
 namespace PathTracer::FileParser
 {
 
-Camera parseCameraFile(const std::string &cameraFileName)
+Camera parseCameraFile(const path &cameraFileName)
 {
-    if(!cameraFileName.ends_with(".camera"))
+    if(cameraFileName.extension() != ".camera")
     {
         std::cerr << "Wrong file extension (must be .camera)!";
         return {};
@@ -22,8 +22,9 @@ Camera parseCameraFile(const std::string &cameraFileName)
     double focalLength = fileRoot->getDouble("FocalLength");
     double viewportHeight = fileRoot->getDouble("ViewportHeight");
     int samplesPerPixel = fileRoot->getInt("SamplesPerPixel");
+    int maxDepth = fileRoot->getInt("MaxDepth");
 
-    return Camera{{x, y, z}, aspectRatio, imageWidth, focalLength, viewportHeight, samplesPerPixel};
+    return Camera{{x, y, z}, aspectRatio, imageWidth, focalLength, viewportHeight, samplesPerPixel, maxDepth};
 }
 
 };

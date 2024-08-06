@@ -5,7 +5,7 @@
 #include <array>
 #include <bitset>
 
-#include "components/RayColliderComponent.h"
+#include "../application/components/RayColliderComponent.h"
 #include "ComponentStorage.h"
 #include "EntityDescriptor.h"
 
@@ -24,8 +24,10 @@ class Scene
                                  m_entityDescriptors(other.m_entityDescriptors)
     {
         std::fill(std::begin(other.m_componentStorages), std::end(other.m_componentStorages), nullptr);
+        other.m_componentStorages.fill(nullptr);
         other.~Scene();
     }
+
 
     ~Scene()
     {
@@ -45,6 +47,11 @@ class Scene
     const EntityDescriptor &getEntityDescriptor(size_t entityId) const
     {
         return m_entityDescriptors[entityId];
+    }
+
+    inline bool queryEntity(size_t entityId, ComponentMask queryMask)
+    {
+        return (getEntityDescriptor(entityId).mask & queryMask) == queryMask;
     }
 
     size_t entityCount() const { return m_entityCount; }
@@ -91,12 +98,13 @@ class Scene
         m_entityDescriptors[entityId].mask.set(getComponentId<T>(), false);
     }
 
+      //  Systems
+
  private:
     size_t m_entityCount = 0;
 
     std::array<EntityDescriptor, MAX_ENTITIES> m_entityDescriptors;
     std::array<BaseComponentStorage*, MAX_COMPONENTS> m_componentStorages{};
-
 };
 
 };
