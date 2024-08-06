@@ -6,13 +6,14 @@
 #include <iostream>
 #include <string>
 
+#include "Constants.h"
 #include "Scene.h"
-#include "../core/FileParser.h"
+#include "FileParser.h"
 
 namespace PathTracer::FileParser
 {
 
-Scene parseSceneFile(const std::string &sceneFileName);
+Scene parseSceneFile(const path &sceneFileName);
 
 };
 

@@ -1,0 +1,76 @@
+Entities:
+    1:
+        RayColliderComponent:
+            Type: Spherical
+            R: 0.5
+        MaterialComponent:
+            MaterialType: TrueLambertian
+            Albedo:
+                R: 0.2
+                G: 0.9
+                B: 0.3
+            Fuzz: 0
+        TransformComponent:
+            X: 0
+            Y: 0
+            Z: -1.2
+    2:
+        RayColliderComponent:
+            Type: Spherical
+            R: 100
+        MaterialComponent:
+            MaterialType: TrueLambertian
+            Albedo:
+                R: 0.8
+                G: 0.8
+                B: 0.0
+            Fuzz: 0
+        TransformComponent:
+            X: 0
+            Y: -100.5
+            Z: -1
+    3:
+        RayColliderComponent:
+            Type: Spherical
+            R: 0.5
+        MaterialComponent:
+            MaterialType: Metal
+            Albedo:
+                R: 0.8
+                G: 0.8
+                B: 0.8
+            Fuzz: 0
+        TransformComponent:
+            X: 1
+            Y: 0
+            Z: -1
+    3:
+        RayColliderComponent:
+            Type: Spherical
+            R: 0.5
+        MaterialComponent:
+            MaterialType: Dielectrics
+            Albedo:
+                R: 1
+                G: 1
+                B: 1
+            RefractionIndex: 1.5
+        TransformComponent:
+            X: -1
+            Y: 0
+            Z: -1
+    3:
+        RayColliderComponent:
+            Type: Spherical
+            R: 0.3
+        MaterialComponent:
+            MaterialType: Dielectrics
+            Albedo:
+                R: 1
+                G: 1
+                B: 1
+            RefractionIndex: 0.66667
+        TransformComponent:
+            X: -1
+            Y: 0
+            Z: -1

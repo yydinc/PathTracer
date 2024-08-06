@@ -4,12 +4,13 @@
 
 #include <optional>
 
+#include "Constants.h"
 #include "Camera.h"
 
 namespace PathTracer::FileParser
 {
 
-Camera parseCameraFile(const std::string &cameraFileName);
+Camera parseCameraFile(const path &cameraFileName);
 
 };
 

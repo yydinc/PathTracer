@@ -26,12 +26,12 @@ inline double randomDouble()
 
 inline double randomDouble(const Interval &interval)
 {
-    return randomDouble() * interval.end - interval.start;
+    return randomDouble() * (interval.end - interval.start) + interval.start;
 }
 
 inline double randomDouble(const Interval &&interval)
 {
-    return randomDouble() * interval.end - interval.start;
+    return randomDouble() * (interval.end - interval.start) + interval.start;
 }
 
 inline Vector3 randomVector()
@@ -57,6 +57,26 @@ inline Vector3 randomVector(const Interval &x, const Interval &y, const Interval
 inline Vector3 randomVector(const Interval &&x, const Interval &&y, const Interval &&z)
 {
     return {randomDouble(x), randomDouble(y), randomDouble(z)};
+}
+
+inline Vector3 randomVectorInUnitSphere()
+{
+    for(;;)
+    {
+        Vector3 v = randomVector({-1, 1});
+        if(v.lengthSquared() < 1) return v;
+    }
+}
+
+inline Vector3 randomUnitVector()
+{
+    return unitVector(randomVectorInUnitSphere());
+}
+
+inline Vector3 randomUnitVectorOnHemisphere(const Vector3 &normal)
+{
+    Vector3 randomUnitV = randomUnitVector();
+    return dot(normal, randomUnitV) > 0 ? randomUnitV : -1 * randomUnitV;
 }
 
 };

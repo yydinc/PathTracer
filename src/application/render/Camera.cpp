@@ -1,7 +1,7 @@
 #include "Camera.h"
-#include "../core/Random.h"
-#include "../ecs/systems/RayCollisionDetectionSystem.h"
-#include "../core/Timer.h"
+#include "Random.h"
+#include "RayIntersectionSystem.h"
+#include "Timer.h"
 
 namespace PathTracer
 {
@@ -19,12 +19,12 @@ void Camera::render(const Scene &scene) const
                 Vector3 rayDirection = pixelLocation - m_location;
 
                 Ray r(m_location, rayDirection);
-                pixelColor += RayCollisionDetectionSystem::rayColor(scene, r);
+                pixelColor += RayIntersectionSystem::rayColor(scene, r, m_maxDepth);
             }
             writeColor(pixelColor * m_pixelColorScaler);
         }
     }
-    std::clog << "\rDone            \n" ;
+    std::clog << "\rDone                    \n" ;
 }
 
 void Camera::initialize()
