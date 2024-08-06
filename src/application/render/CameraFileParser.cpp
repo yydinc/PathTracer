@@ -14,17 +14,27 @@ Camera parseCameraFile(const path &cameraFileName)
 
     FileNode *fileRoot = parseFile(cameraFileName);
 
-    double x = fileRoot->getDouble("X");
-    double y = fileRoot->getDouble("Y");
-    double z = fileRoot->getDouble("Z");
+    Vector3 location, lookAt, viewUp;
+
+    location.x = (*fileRoot)["Location"]->getDouble("X");
+    location.y = (*fileRoot)["Location"]->getDouble("Y");
+    location.z = (*fileRoot)["Location"]->getDouble("Z");
+
+    viewUp.x = (*fileRoot)["ViewUp"]->getDouble("X");
+    viewUp.y = (*fileRoot)["ViewUp"]->getDouble("Y");
+    viewUp.z = (*fileRoot)["ViewUp"]->getDouble("Z");
+
+    lookAt.x = (*fileRoot)["LookAt"]->getDouble("X");
+    lookAt.y = (*fileRoot)["LookAt"]->getDouble("Y");
+    lookAt.z= (*fileRoot)["LookAt"]->getDouble("Z");
+
     double aspectRatio = fileRoot->getDouble("AspectRatio");
     int imageWidth = fileRoot->getInt("ImageWidth");
-    double focalLength = fileRoot->getDouble("FocalLength");
-    double viewportHeight = fileRoot->getDouble("ViewportHeight");
+    double fov = fileRoot->getDouble("Fov");
     int samplesPerPixel = fileRoot->getInt("SamplesPerPixel");
     int maxDepth = fileRoot->getInt("MaxDepth");
 
-    return Camera{{x, y, z}, aspectRatio, imageWidth, focalLength, viewportHeight, samplesPerPixel, maxDepth};
+    return Camera{location, lookAt, viewUp, aspectRatio, imageWidth, fov, samplesPerPixel, maxDepth};
 }
 
 };

@@ -31,18 +31,26 @@ void Camera::initialize()
 {
     m_imageHeight = static_cast<int>(m_imageWidth/m_aspectRatio);
 
-    m_viewportWidth = m_viewportHeight * (static_cast<double>(m_imageWidth)/m_imageHeight);
-
     m_pixelColorScaler = 1.0 / m_samplesPerPixel;
 
-    m_viewportU = {m_viewportWidth, 0, 0};
-    m_viewportV = {0, -m_viewportHeight, 0};
+    auto focalLength = (m_location - m_lookAt).length();
 
-    m_deltaU = m_viewportU / m_imageWidth;
-    m_deltaV = m_viewportV / m_imageHeight;
+    auto h = std::tan(degreesToRadians(m_fov) / 2);
 
-    m_viewportUpperLeft = m_location - Vector3(0, 0, m_focalLength) - m_viewportU/2 -m_viewportV/2;
-    m_pixel00Location = m_viewportUpperLeft + (m_deltaU*0.5 + m_deltaV*0.5);
+    auto viewportHeight = 2 * h * focalLength;
+    auto viewportWidth = viewportHeight * (static_cast<double>(m_imageWidth)/m_imageHeight);
+
+    m_w = unitVector(m_location - m_lookAt);
+    m_u = unitVector(cross(m_viewUp, m_w));
+    m_v = cross(m_w, m_u);
+
+    Vector3 viewportU = viewportWidth * m_u;;
+    Vector3 viewportV = viewportHeight * -1*m_v;;
+
+    m_deltaU = viewportU / m_imageWidth;
+    m_deltaV = viewportV / m_imageHeight;
+    auto viewportUpperLeft = m_location - focalLength *m_w - viewportU/2 -viewportV/2;
+    m_pixel00Location = viewportUpperLeft + (m_deltaU*0.5 + m_deltaV*0.5);
 }
 
 };
