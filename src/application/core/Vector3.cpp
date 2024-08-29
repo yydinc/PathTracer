@@ -9,28 +9,28 @@ void Vector3::add(const Vector3 &other)
 {
     x += other.x;
     y += other.y;
-    z += other.y;
+    z += other.z;
 }
 
 void Vector3::subtract(const Vector3 &other)
 {
     x -= other.x;
     y -= other.y;
-    z -= other.y;
+    z -= other.z;
 }
 
 void Vector3::multiply(const Vector3 &other)
 {
     x *= other.x;
     y *= other.y;
-    z *= other.y;
+    z *= other.z;
 }
 
 void Vector3::divide(const Vector3 &other)
 {
     x /= other.x;
     y /= other.y;
-    z /= other.y;
+    z /= other.z;
 }
 
 void Vector3::multiply(double t)

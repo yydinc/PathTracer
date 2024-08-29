@@ -23,7 +23,6 @@ class Scene
                                  m_componentStorages(other.m_componentStorages),
                                  m_entityDescriptors(other.m_entityDescriptors)
     {
-        std::fill(std::begin(other.m_componentStorages), std::end(other.m_componentStorages), nullptr);
         other.m_componentStorages.fill(nullptr);
         other.~Scene();
     }

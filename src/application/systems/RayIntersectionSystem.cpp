@@ -74,7 +74,6 @@ optional<RayIntersectionRecord> RayIntersectionSystem::collideFirst(const Scene 
 
     RayIntersectionRecord cRec;
     const size_t colliderComponentId = scene.getComponentId<RayColliderComponent>();
-    const size_t transformComponentId = scene.getComponentId<TransformComponent>();
 
     auto *p_colliderStorage = scene.getComponentStorage<RayColliderComponent>();
     auto *p_transformStorage = scene.getComponentStorage<TransformComponent>();
@@ -101,14 +100,7 @@ Color RayIntersectionSystem::rayColor(const Scene &scene, const Ray &ray, int de
     if(depth == 0) return {0};
     auto cRec = RayIntersectionSystem::collideFirst(scene, ray, {0.001, infinity});
     if (cRec) {
-#if 0
-
-        Vector3 randomUnitV = randomUnitVector();
-        randomUnitV = dot(cRec->normal, randomUnitV) > 0 ? randomUnitV : -1 * randomUnitV;
-        return 0.5 * rayColor(scene, {cRec->point, randomUnitV}, depth-1);
-#else
         return cRec->material.albedo * rayColor(scene, RayScatteringSystem::scatter(ray, cRec.value()), depth - 1);
-#endif
     }
 
     Vector3 unitDirection = unitVector(ray.direction());
